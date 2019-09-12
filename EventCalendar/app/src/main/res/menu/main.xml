@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/deleteEvent"
+        android:orderInCategory="100"
+        android:title="Delete"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/editEvent"
+        android:orderInCategory="100"
+        android:title="Edit"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/saveEvent"
+        android:orderInCategory="100"
+        android:title="Save"
+        app:showAsAction="ifRoom"/>
+
+</menu>
