@@ -41,4 +41,10 @@
         android:text="All events"
         android:textColor="@color/white4Ever" />
 
+    <Button
+        android:id="@+id/btnTestNotification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
 </LinearLayout>

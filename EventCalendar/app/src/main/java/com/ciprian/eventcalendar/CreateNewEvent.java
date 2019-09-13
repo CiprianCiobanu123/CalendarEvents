@@ -6,6 +6,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
@@ -26,7 +28,7 @@ import static java.util.Calendar.MONTH;
 
 public class CreateNewEvent extends AppCompatActivity {
 
-    Button btnAddEventInDB,etDateEvent ;
+    Button btnAddEventInDB,etDateEvent, btnTime ;
     EditText etNameEvent,  etLocationEvent;
     Calendar mycalendar = Calendar.getInstance();
 
@@ -85,10 +87,29 @@ public class CreateNewEvent extends AppCompatActivity {
         etNameEvent = findViewById(R.id.etNameEvent);
         etDateEvent = findViewById(R.id.etDateEvent);
         etLocationEvent = findViewById(R.id.etLocationEvent);
+        btnTime = findViewById(R.id.btnTime);
 
         mProgressView = findViewById(R.id.login_progress);
         mLoginFormView = findViewById(R.id.login_form);
         tvLoad = findViewById(R.id.tvLoad);
+
+        btnTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(CreateNewEvent.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        btnTime.setText( selectedHour + ":" + selectedMinute);
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+            }
+        });
 
         etDateEvent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +136,8 @@ public class CreateNewEvent extends AppCompatActivity {
         btnAddEventInDB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(etDateEvent.getText().toString().isEmpty() || etNameEvent.getText().toString().isEmpty() || etLocationEvent.getText().toString().isEmpty())
+                if(etDateEvent.getText().toString().isEmpty() || etNameEvent.getText().toString().isEmpty() || etLocationEvent.getText().toString().isEmpty()
+                || btnTime.getText().toString().isEmpty())
                 {
                     Toast.makeText(CreateNewEvent.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
                 }
@@ -123,6 +145,7 @@ public class CreateNewEvent extends AppCompatActivity {
                 {
                     showProgress(true);
 
+                    String timeEvent = btnTime.getText().toString().trim();
                     String nameEvent = etNameEvent.getText().toString().trim();
                     String dateEvent = etDateEvent.getText().toString().trim();
                     String locationEvent = etLocationEvent.getText().toString().trim();
@@ -131,6 +154,7 @@ public class CreateNewEvent extends AppCompatActivity {
                     Event event = new Event();
 
                     event.setMonthValue(monthValue);
+                    event.setTimeEvent(timeEvent);
                     event.setDateEvent(dateEvent);
                     event.setLocationEvent(locationEvent);
                     event.setNameEvent(nameEvent);

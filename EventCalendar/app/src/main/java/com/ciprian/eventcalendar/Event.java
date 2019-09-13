@@ -10,6 +10,15 @@ public class Event {
     private Date updated;
     private String objectId;
     private int monthValue;
+    private String timeEvent;
+
+    public String getTimeEvent() {
+        return timeEvent;
+    }
+
+    public void setTimeEvent(String timeEvent) {
+        this.timeEvent = timeEvent;
+    }
 
     public int getMonthValue() {
         return monthValue;

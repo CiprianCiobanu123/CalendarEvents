@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -12,12 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service android:name="com.backendless.push.BackendlessFCMService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
         <activity android:name=".EventDetailed"></activity>
         <activity android:name=".ShowEvents" />
         <activity android:name=".CreateNewEvent" />
         <activity android:name=".RecoverPassword" />
         <activity android:name=".Register" />
         <activity android:name=".Login">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
