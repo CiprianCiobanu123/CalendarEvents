@@ -11,6 +11,8 @@ import android.widget.Toast;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.backendless.messaging.MessageStatus;
+import com.backendless.messaging.PublishOptions;
 import com.backendless.push.DeviceRegistrationResult;
 import com.google.firebase.FirebaseApp;
 
@@ -36,11 +38,22 @@ public class MainActivity extends AppCompatActivity {
         btnTestNotification.setOnClickListener(new View.OnClickListener() {
                                                    @Override
                                                    public void onClick(View view) {
+                                                       Backendless.Messaging.pushWithTemplate("Cipi", new AsyncCallback<MessageStatus>() {
+                                                           @Override
+                                                           public void handleResponse(MessageStatus response) {
+                                                               Toast.makeText(MainActivity.this, "sent", Toast.LENGTH_SHORT).show();
+                                                           }
+
+                                                           @Override
+                                                           public void handleFault(BackendlessFault fault) {
+                                                               Toast.makeText(MainActivity.this, fault.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                                           }
+                                                       });
 
                                                    }
                                                }
         );
-
 
         List<String> channels = new ArrayList<>();
         channels.add("default");

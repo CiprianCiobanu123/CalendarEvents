@@ -17,6 +17,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        // do not forget to call Backendless.initApp in the app initialization code
 
         Backendless.setUrl(SERVER_URL);
         Backendless.initApp(getApplicationContext(),
