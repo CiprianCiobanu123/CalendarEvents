@@ -42,6 +42,18 @@
         tools:context=".CreateNewEvent">
 
         <EditText
+            android:id="@+id/etMember"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:ems="10"
+            android:gravity="center_horizontal"
+            android:hint="Member"
+            android:inputType="textPersonName" />
+
+        <EditText
             android:id="@+id/etNameEvent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,6 +64,8 @@
             android:gravity="center_horizontal"
             android:hint="Title"
             android:inputType="textPersonName" />
+
+
 
         <EditText
             android:id="@+id/etLocationEvent"
@@ -74,7 +88,6 @@
             android:layout_marginRight="20dp"
             android:background="@drawable/emptybutton"
             android:hint="Date"
-            android:text="Date"
             android:textColor="@color/colorPrimary" />
 
         <Button
@@ -85,7 +98,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/emptybutton"
-            android:text="Time"
+            android:hint="Time"
             android:textColor="@color/colorPrimary" />
 
         <Button

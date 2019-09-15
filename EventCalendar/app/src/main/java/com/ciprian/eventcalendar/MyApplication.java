@@ -13,6 +13,7 @@ public class MyApplication extends Application {
     public static BackendlessUser user;
     public static String objectId;
     public static boolean editPressed= false;
+    public static boolean admin = false;
 
     @Override
     public void onCreate() {

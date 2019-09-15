@@ -70,6 +70,19 @@ public class Login extends AppCompatActivity {
                         public void handleResponse(BackendlessUser response) {
                             MyApplication.user = response;
                             Toast.makeText(Login.this, "Logged in", Toast.LENGTH_SHORT).show();
+
+//                            Toast.makeText(Login.this, response.getProperty("admin").toString(), Toast.LENGTH_SHORT).show();
+
+                            if((Boolean) response.getProperty("admin"))
+                            {
+                                MyApplication.admin = true;
+                                Toast.makeText(Login.this, "Admin", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                MyApplication.admin = false;
+                                Toast.makeText(Login.this, "User", Toast.LENGTH_SHORT).show();
+                            }
                             startActivity(new Intent(Login.this, MainActivity.class));
                             Login.this.finish();
                         }

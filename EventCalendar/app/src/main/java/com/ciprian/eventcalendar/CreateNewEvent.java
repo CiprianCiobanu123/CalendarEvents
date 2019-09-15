@@ -1,5 +1,6 @@
 package com.ciprian.eventcalendar;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.Animator;
@@ -7,6 +8,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -29,18 +31,18 @@ import static java.util.Calendar.MONTH;
 public class CreateNewEvent extends AppCompatActivity {
 
     Button btnAddEventInDB,etDateEvent, btnTime ;
-    EditText etNameEvent,  etLocationEvent;
+    EditText etNameEvent,  etLocationEvent, etMember;
     Calendar mycalendar = Calendar.getInstance();
 
     private final int day = mycalendar.get(Calendar.DAY_OF_MONTH);
     private final int month = mycalendar.get(Calendar.MONTH);
     private final int year = mycalendar.get(Calendar.YEAR);
 
+    public static final int requestCodeForShowMembers = 999;
+
     private View mProgressView;
     private View mLoginFormView;
     private TextView tvLoad;
-
-
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
@@ -71,13 +73,27 @@ public class CreateNewEvent extends AppCompatActivity {
                 }
             });
         } else {
-// The ViewPropertyAnimator APIs are not available, so simply show
-// and hide the relevant UI components.
+
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             tvLoad.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == requestCodeForShowMembers)
+        {
+            if(resultCode == RESULT_OK)
+            {
+                etMember.setText(data.getStringExtra("memberName"));
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,10 +104,31 @@ public class CreateNewEvent extends AppCompatActivity {
         etDateEvent = findViewById(R.id.etDateEvent);
         etLocationEvent = findViewById(R.id.etLocationEvent);
         btnTime = findViewById(R.id.btnTime);
+        etMember = findViewById(R.id.etMember);
 
         mProgressView = findViewById(R.id.login_progress);
         mLoginFormView = findViewById(R.id.login_form);
         tvLoad = findViewById(R.id.tvLoad);
+
+        if(!MyApplication.admin)
+        {
+            etMember.setVisibility(View.GONE);
+        }
+        if(MyApplication.admin)
+        {
+            etMember.setVisibility(View.VISIBLE);
+        }
+
+        etMember.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(CreateNewEvent.this,
+                        com.ciprian.eventcalendar.ShowMembers.class);
+                startActivityForResult(intent, requestCodeForShowMembers);
+
+            }
+        });
 
         btnTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,6 +186,7 @@ public class CreateNewEvent extends AppCompatActivity {
                     String nameEvent = etNameEvent.getText().toString().trim();
                     String dateEvent = etDateEvent.getText().toString().trim();
                     String locationEvent = etLocationEvent.getText().toString().trim();
+                    String memberName = etMember.getText().toString().trim();
                     int monthValue = mycalendar.get(MONTH);
 
                     Event event = new Event();
@@ -158,6 +196,7 @@ public class CreateNewEvent extends AppCompatActivity {
                     event.setDateEvent(dateEvent);
                     event.setLocationEvent(locationEvent);
                     event.setNameEvent(nameEvent);
+                    event.setMemberEvent(memberName);
 
                     Backendless.Persistence.save(event, new AsyncCallback<Event>() {
                         @Override

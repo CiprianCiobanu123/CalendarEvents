@@ -11,6 +11,15 @@ public class Event {
     private String objectId;
     private int monthValue;
     private String timeEvent;
+    private String memberEvent;
+
+    public String getMemberEvent() {
+        return memberEvent;
+    }
+
+    public void setMemberEvent(String memberEvent) {
+        this.memberEvent = memberEvent;
+    }
 
     public String getTimeEvent() {
         return timeEvent;

@@ -10,14 +10,11 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -45,11 +42,9 @@ public class EventDetailed extends AppCompatActivity {
 
     MenuItem saveEvent, editEvent, deleteEvent;
 
-
     private View mProgressView;
     private View mLoginFormView;
     private TextView tvLoad;
-
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -67,7 +62,6 @@ public class EventDetailed extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        final int ANOTHER_RESULT_WAIT_FOR_CANCEL_CODE = 9;
         final String whereClause = "objectId = '" + MyApplication.objectId + "'";
         DataQueryBuilder queryBuilder = DataQueryBuilder.create();
         queryBuilder.setWhereClause(whereClause);
@@ -111,6 +105,9 @@ public class EventDetailed extends AppCompatActivity {
                                 Toast.makeText(EventDetailed.this, fault.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
+
+                        MyApplication.editPressed = false;
+
                     }
                 } else {
                     Toast.makeText(this, "Nothing was modified", Toast.LENGTH_SHORT).show();

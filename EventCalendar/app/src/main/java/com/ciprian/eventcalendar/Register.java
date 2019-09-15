@@ -65,10 +65,24 @@ public class Register extends AppCompatActivity {
                         user.setPassword(password);
                         user.setProperty("name", name);
 
+                        final Member member = new Member();
+                        member.setName(name);
+
                         Backendless.UserService.register(user, new AsyncCallback<BackendlessUser>() {
                             @Override
                             public void handleResponse(BackendlessUser response) {
                                 Toast.makeText(Register.this, "New user registered", Toast.LENGTH_SHORT).show();
+                                Backendless.Persistence.save(member, new AsyncCallback<Member>() {
+                                    @Override
+                                    public void handleResponse(Member response) {
+                                        Toast.makeText(Register.this, "Member saved", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void handleFault(BackendlessFault fault) {
+                                        Toast.makeText(Register.this, fault.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                                 Register.this.finish();
                                 startActivity(new Intent(Register.this, Login.class));
                             }
@@ -76,6 +90,7 @@ public class Register extends AppCompatActivity {
                             @Override
                             public void handleFault(BackendlessFault fault) {
                                 Toast.makeText(Register.this, "Error:" + fault.getMessage(), Toast.LENGTH_SHORT).show();
+                                showProgress(false);
                             }
                         });
                     } else {
@@ -85,6 +100,7 @@ public class Register extends AppCompatActivity {
                 }
             }
         });
+
 
     }
 
