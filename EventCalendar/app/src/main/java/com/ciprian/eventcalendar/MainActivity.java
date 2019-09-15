@@ -36,24 +36,23 @@ public class MainActivity extends AppCompatActivity {
         btnTestNotification = findViewById(R.id.btnTestNotification);
 
         btnTestNotification.setOnClickListener(new View.OnClickListener() {
-                                                   @Override
-                                                   public void onClick(View view) {
-                                                       Backendless.Messaging.pushWithTemplate("Cipi", new AsyncCallback<MessageStatus>() {
-                                                           @Override
-                                                           public void handleResponse(MessageStatus response) {
-                                                               Toast.makeText(MainActivity.this, "sent", Toast.LENGTH_SHORT).show();
-                                                           }
+            @Override
+            public void onClick(View v) {
 
-                                                           @Override
-                                                           public void handleFault(BackendlessFault fault) {
-                                                               Toast.makeText(MainActivity.this, fault.getMessage(), Toast.LENGTH_SHORT).show();
+                Backendless.Messaging.pushWithTemplate("user", new AsyncCallback<MessageStatus>() {
+                    @Override
+                    public void handleResponse(MessageStatus response) {
+                        Toast.makeText(MainActivity.this, "sent", Toast.LENGTH_SHORT).show();
+                    }
 
-                                                           }
-                                                       });
+                    @Override
+                    public void handleFault(BackendlessFault fault) {
+                        Toast.makeText(MainActivity.this, fault.getMessage(), Toast.LENGTH_SHORT).show();
 
-                                                   }
-                                               }
-        );
+                    }
+                });
+            }
+        });
 
         List<String> channels = new ArrayList<>();
         channels.add("default");
