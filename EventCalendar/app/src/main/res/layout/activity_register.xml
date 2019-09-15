@@ -88,13 +88,46 @@
             android:hint="confirm password"
             android:inputType="textPassword" />
 
-        <Button
-            android:id="@+id/btnRegister"
+        <EditText
+            android:id="@+id/etPasswordAdmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/fullbutton"
-            android:text="Register"
-            android:textColor="@color/white4Ever" />
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:ems="10"
+            android:gravity="center_horizontal"
+            android:hint="password admin"
+            android:inputType="numberPassword" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="4"
+                android:background="@drawable/fullbutton"
+                android:text="Register"
+                android:textColor="@color/white4Ever" />
+
+            <CheckBox
+                android:id="@+id/cbAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="Admin" />
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
 </LinearLayout>
